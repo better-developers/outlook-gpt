@@ -16,7 +16,6 @@ export const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
   const [token, setToken] = useState<string | undefined>(undefined);
   const [errorText, setErrorText] = useState<string>("");
   const [mailContent, setMailContent] = useState<string>("");
-  const [completion, setCompletion] = useState<string | null>(null);
 
   Office.context.mailbox.item?.body.getAsync("text", (result) => {
     if (result.status === Office.AsyncResultStatus.Failed) {
@@ -54,7 +53,7 @@ export const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
         ],
       });
 
-      setCompletion(completion.choices[0].message.content);
+      Office.context.mailbox.item?.body.setSelectedDataAsync(completion.choices[0].message.content ?? "");
     } catch (err: unknown) {
       if (err instanceof OpenAI.APIError) {
         setErrorText(err.message);
@@ -87,8 +86,6 @@ export const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
       <DefaultButton text="Initialize" allowDisabledFocus onClick={initialize} />
 
       <PrimaryButton className="generate-button" text="Generate response" allowDisabledFocus onClick={generate} />
-
-      {completion}
     </div>
   );
 };
