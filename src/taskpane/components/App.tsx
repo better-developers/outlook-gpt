@@ -76,6 +76,8 @@ export const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
   return (
     <div className="container">
       <TextField
+        type="password"
+        canRevealPassword
         label="OpenAPI token"
         autoComplete="off"
         spellCheck="false"
