@@ -13,7 +13,7 @@ export interface AppProps {
 
 export const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
   const openAi = useRef<OpenAI>(new OpenAI({ dangerouslyAllowBrowser: true, apiKey: "" }));
-  const [token, setToken] = useState<string | undefined>(undefined);
+  const [token, setToken] = useState<string | undefined>(Office.context.roamingSettings.get("token"));
   const [errorText, setErrorText] = useState<string>("");
   const [mailContent, setMailContent] = useState<string>("");
 
@@ -28,6 +28,8 @@ export const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
   const initialize = () => {
     if (!token) return setErrorText("Provide a token");
 
+    Office.context.roamingSettings.set("token", token);
+    Office.context.roamingSettings.saveAsync();
     openAi.current.apiKey = token;
   };
 
@@ -81,6 +83,7 @@ export const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
         label="OpenAPI token"
         autoComplete="off"
         spellCheck="false"
+        defaultValue={token}
         onChange={onTokenChange}
         errorMessage={errorText}
       ></TextField>
