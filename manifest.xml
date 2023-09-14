@@ -10,7 +10,7 @@
   <ProviderName>Better Developers</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="OutlookGPT" />
-  <Description DefaultValue="Power your emails with ChatGPT!" />
+  <Description DefaultValue="Power your emails with ChatGPT" />
   <IconUrl DefaultValue="https://thunderous-brigadeiros-53869e.netlify.app/assets/icon-64.png" />
   <HighResolutionIconUrl
     DefaultValue="https://thunderous-brigadeiros-53869e.netlify.app/assets/icon-128.png" />
