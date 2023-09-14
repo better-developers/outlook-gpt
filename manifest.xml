@@ -6,7 +6,7 @@
   xsi:type="MailApp">
 
   <Id>d0c72665-7dba-41f5-bf5a-64a398cd56c9</Id>
-  <Version>1.0.0.2</Version>
+  <Version>1.1.0.0</Version>
   <ProviderName>Better Developers</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="OutlookGPT" />
