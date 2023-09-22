@@ -51,15 +51,17 @@ export const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
           {
             role: "system",
             content:
-              "Du skal komme med et svar på en mail-korrespondance. Du bliver givet en hel mailtråd, samt eventuelt et fritekst felt fra brugeren, og skal forsøge at komme med det bedste svar",
+              "Du skal komme med et svar på en mail-korrespondance. Du bliver brugt i Outlook som et plugin, hvor brugeren vil svare på en mail, og bruger dig til at generere et godt svar. Du bliver givet den rå mail-korrespondance, samt eventuelt et fritekst felt fra brugeren, og skal forsøge at komme med det bedste svar",
           },
           {
             role: "user",
-            content: `
-Dette er mail-korrespondancen:
-${mailContent}
+            content: `Dette er mail-korrespondancen:
 
-Og her er det valgfrie tekst fra brugeren:
+${mailContent}`,
+          },
+          {
+            role: "user",
+            content: `Og her er det friteksten fra brugeren:
 ${freeText}
             `,
           },
