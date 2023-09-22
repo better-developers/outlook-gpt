@@ -15,6 +15,7 @@ export const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
   const openAi = useRef<OpenAI>(new OpenAI({ dangerouslyAllowBrowser: true, apiKey: "" }));
   const [token, setToken] = useState<string | undefined>(Office.context.roamingSettings.get("token"));
   const [errorText, setErrorText] = useState<string>("");
+  const [freeText, setFreeText] = useState<string | undefined>("");
   const [mailContent, setMailContent] = useState<string>("");
 
   Office.context.mailbox.item?.body.getAsync("text", (result) => {
@@ -38,6 +39,10 @@ export const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
     setToken(token);
   };
 
+  const onFreeText = (_: FormEvent, text: string | undefined) => {
+    setFreeText(text);
+  };
+
   const generate = async () => {
     try {
       const completion = await openAi.current.chat.completions.create({
@@ -46,11 +51,17 @@ export const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
           {
             role: "system",
             content:
-              "Du skal komme med et svar på en mail-korrespondance. Du bliver givet en hel mailtråd, og skal forsøge at komme med det bedste svar",
+              "Du skal komme med et svar på en mail-korrespondance. Du bliver givet en hel mailtråd, samt eventuelt et fritekst felt fra brugeren, og skal forsøge at komme med det bedste svar",
           },
           {
             role: "user",
-            content: mailContent,
+            content: `
+Dette er mail-korrespondancen:
+${mailContent}
+
+Og her er det valgfrie tekst fra brugeren:
+${freeText}
+            `,
           },
         ],
       });
@@ -89,6 +100,8 @@ export const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
       ></TextField>
 
       <DefaultButton text="Initialize" allowDisabledFocus onClick={initialize} />
+
+      <TextField label="Free text" multiline rows={3} onChange={onFreeText} />
 
       <PrimaryButton className="generate-button" text="Generate response" allowDisabledFocus onClick={generate} />
     </div>
