@@ -55,15 +55,11 @@ export const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
           },
           {
             role: "user",
-            content: `Dette er mail-korrespondancen:
-
-${mailContent}`,
+            content: mailContent,
           },
           {
             role: "user",
-            content: `Og her er det friteksten fra brugeren:
-${freeText}
-            `,
+            content: freeText ?? "",
           },
         ],
       });
